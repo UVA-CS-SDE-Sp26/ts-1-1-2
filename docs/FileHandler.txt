@@ -1,0 +1,32 @@
+FileHandler Design
+Roshan Mahesh
+Part B
+
+Description:
+This component is responsible for all file I/O operations. It reads files from the data folder
+and returns their contents. No other component should directly access files.
+
+Pseudocode:
+
+CLASS FileHandler:
+
+    DEFINE static method listFiles() returns List<String>:
+        GET all files from data folder
+        RETURN list of filenames
+
+    DEFINE static method readFile(String filename) returns String:
+        OPEN file from data/filename
+        READ all contents
+        CLOSE file
+        RETURN contents as String
+
+    DEFINE static method fileExists(String filename) returns boolean:
+        CHECK if data/filename exists
+        RETURN true if exists, false otherwise
+
+Tests:
+
+if data folder has 3 files, listFiles() should return list of size 3
+if file exists and is readable, readFile() should return non-empty string
+if file does not exist, readFile() should throw FileNotFoundException or return null
+if filename is "testfile.txt" and exists, readFile("testfile.txt") should return its contents
