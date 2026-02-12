@@ -1,0 +1,7 @@
+Intelligence Briefing: Bravo
+Location: Eastern District
+Priority: High
+
+Recent satellite imagery shows increased activity at the suspected facility.
+Recommend deploying additional reconnaissance assets to the area.
+Further analysis required before proceeding with next phase.

@@ -1,0 +1,52 @@
+Cipher design
+Jacob Rief
+Role D
+
+Description:
+This component will handle the ciphering feature. It will accept a ciphered string
+and return it deciphered. The Cipher class will handle loading the Cipher key from a file,
+validate the key, map the ciphered characters to their original characters, and decipher
+string using key.
+
+Pseudocode:
+CLASS Cipher:
+    METHOD decipher(cipherText: String, keyFile: Path) -> String:
+        lines = read all lines from keyFile
+        IF not 2 lines:
+            THROW IllegalArgumentException("Key file must have exactly 2 lines")
+
+        actualLine = trim(lines[0])
+        cipherLine = trim(lines[1])
+
+        CALL validateKey(actualLine, cipherLine)
+
+        mapping = empty map
+        FOR i = 0 to actualLine.length-1:
+            mapping.put(cipherLine[i], actualLine[i])
+
+        result = empty string
+        FOR each character c in cipherText:
+            IF mapping contains c:
+                result += mapping[c]
+            ELSE:
+                result += c
+        RETURN result
+
+    METHOD validateKey(actualLine: String, cipherLine: String):
+        IF actualLine.length != cipherLine.length:
+            THROW IllegalArgumentException("Key lines must be same length")
+
+        IF actualLine contains duplicate characters:
+            THROW IllegalArgumentException("Duplicate character in actual line")
+
+        IF cipherLine contains duplicate characters:
+            THROW IllegalArgumentException("Duplicate character in cipher line")
+
+Tests:
+
+If key file contains two properly formatted lines, decipher() should return  original text for given ciphered string
+If key file does not exist, decipher() should throw IOException
+If two lines in the key file are not the same length, decipher() should throw IllegalArgumentException
+If either line in key contains repeated characters, decipher() should throw IllegalArgumentException
+Text containing spaces, commas, exclamation points, or other non-alphabetic characters should remain unchanged in the output
+Passing a different valid key file to decipher() should produce expected deciphered text
