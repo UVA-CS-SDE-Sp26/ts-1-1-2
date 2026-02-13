@@ -7,6 +7,11 @@ import java.util.Objects;
 public class ProgramControl {
 
     private static final List<String> listOfFiles = FileHandler.listFiles();
+    Cipher solve = new Cipher();
+
+    public void setCipher(Cipher cip){
+        solve = cip;
+    }
 
     public String getFileList(){
         String infoToReturn = "";
@@ -23,7 +28,6 @@ public class ProgramControl {
 
     public String getFileContents(String fileNumber, String pathVar) throws IOException {
         String cipherText = "";
-        Cipher solve = new Cipher();
         try {
             int n = Integer.parseInt(fileNumber);
 
@@ -33,17 +37,17 @@ public class ProgramControl {
             cipherText = FileHandler.readFile(listOfFiles.get(n-1));
         }
         catch (NumberFormatException a) {
-            return "Please Enter a valid number correlating to files.\n";
+            return "Please enter a valid number correlating to files.\n";
         }
         try {
             //In case of null pathvar use default key; in case of given pathvar, use that instead
             return solve.decipher(cipherText, Paths.get(Objects.requireNonNullElse(pathVar, "ciphers/key.txt")));
         }
         catch (NullPointerException | NoSuchFileException ex) {
-            return "Invalid key file path.";
+            return "Invalid key file path.\n";
         }
         catch (IllegalArgumentException am) {
-            return "Please make sure your key is valid.";
+            return "Please make sure your key is valid.\n";
         }
     }
 
