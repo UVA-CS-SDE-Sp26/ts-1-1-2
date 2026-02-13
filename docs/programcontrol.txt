@@ -1,1 +1,27 @@
-Testing plan
+David Wang
+Member C
+
+Testing plan:
+
+Cipher.java
+* Create own cipher and verify that it works properly
+* In case of missing key file, throws exception
+* In case key file is different lengths or has duplicates, throw exception
+* Verify that punctuation does not change under the current system
+* A different file path also successfully deciphers
+
+FileHandler.java
+* FileHandler sees that there are files within the directory and does see files that exist and doesn't accept any and all file calls
+* FileHandler is capable of reading files
+* Proper exception thrown when attempting to read a file that doesn't exist.
+
+ProgramControl.java
+* Ensure that the correct string is returned to userInterface upon calling
+* Bad selection of file and keypath doesn't result in crash
+* Edge case of empty file is still able to be read
+
+UserInterface.java
+* Verify that list files prints what's requested
+* Verify file contents are printed
+* Verify invalid file selection results in graceful exit
+* Verify IOException is properly thrown
