@@ -42,18 +42,12 @@ public class Cipher {
         Set<Character> cipherSet = new HashSet<>();
 
         for (char c : actual.toCharArray()) {
-            if (!Character.isLetter(c)) {
-                throw new IllegalArgumentException("Contains invalid character: " + c);
-            }
             if (!actualSet.add(c)) {
                 throw new IllegalArgumentException("Duplicate character in actual line: " + c);
             }
         }
 
         for (char c : cipher.toCharArray()) {
-            if (!Character.isLetter(c)) {
-                throw new IllegalArgumentException("Cipher line contains invalid character: " + c);
-            }
             if (!cipherSet.add(c)) {
                 throw new IllegalArgumentException("Duplicate character in cipher line: " + c);
             }
