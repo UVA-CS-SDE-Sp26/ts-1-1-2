@@ -1,3 +1,6 @@
+//Metin Halac
+//Role A
+
 public class UserInterface {
     private final ProgramControl control;
 
@@ -31,7 +34,7 @@ public class UserInterface {
         // Validating file number format, it has to be 2 digits.
         String fileNumber = args[0];
         if (!fileNumber.matches("\\d{2}")) {
-            System.out.println("Error: Invalid file selection.");
+            System.out.println("Error: Invalid file query.");
             return 1;
         }
 
@@ -39,11 +42,11 @@ public class UserInterface {
         String keyPath = null;
 
         if (args.length == 2) {
-            args[1] = keyPath;
+            keyPath = args[1];
         }
 
         try {
-            String text = control.getFileContents(fileNumber, keyPath);
+            String text = control.getFileContents(fileNumber);
             System.out.print(text);
             return 0;
         } catch (IllegalArgumentException e) {
@@ -53,4 +56,5 @@ public class UserInterface {
             System.out.println("Error: Unable to display file.");
             return 1;
         }
+    }
 }
