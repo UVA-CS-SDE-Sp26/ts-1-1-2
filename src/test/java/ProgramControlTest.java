@@ -9,9 +9,9 @@ class ProgramControlTest {
 
     @Test
     void getFileList() {
-        String expectedList = "";
+        String expectedList = "01  filea.txt\n02  fileb.txt\n03  filec.txt\n";
         ProgramControl Handler = new ProgramControl();
-        assertEquals(expectedList, Handler.getFileList(), "List of files correct");
+        assertEquals(expectedList, Handler.getFileList(), "List of files correct\n");
 
     }
 
@@ -19,6 +19,6 @@ class ProgramControlTest {
     void getFileContents() throws IOException {
         String expectedContents = "";
         ProgramControl Handler = new ProgramControl();
-        assertEquals(expectedContents, Handler.getFileContents("01"), "The file contents are correct!");
+        assertEquals(expectedContents, Handler.getFileContents("01", null), "The file contents are correct!");
     }
 }

@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -16,7 +17,7 @@ public class ProgramControl {
         }
 
         for (int i = 0; i < listOfFiles.size(); i++) {
-            infoToReturn = infoToReturn.concat(String.format("%02d", i) + "  " + listOfFiles.get(i) + "\n");
+            infoToReturn = infoToReturn.concat(String.format("%02d", i+1) + "  " + listOfFiles.get(i) + "\n");
         }
 
         return infoToReturn;
@@ -24,7 +25,6 @@ public class ProgramControl {
 
     public String getFileContents(String fileNumber, String pathVar) throws IOException {
         String cipherText = "";
-        Path keyFileLocation;
         Cipher solve = new Cipher();
         try {
             int n = Integer.parseInt(fileNumber);
@@ -39,11 +39,13 @@ public class ProgramControl {
         }
         try {
             //In case of null pathvar use default key; in case of given pathvar, use that instead
-            keyFileLocation = Paths.get(Objects.requireNonNullElse(pathVar, "ciphers/key.txt"));
-            return solve.decipher(cipherText, keyFileLocation);
+            return solve.decipher(cipherText, Paths.get(Objects.requireNonNullElse(pathVar, "ciphers/key.txt")));
         }
-        catch (InvalidPathException | NullPointerException ex) {
-            return "Invalid key file path";
+        catch (NullPointerException | NoSuchFileException ex) {
+            return "Invalid key file path.";
+        }
+        catch (IllegalArgumentException am) {
+            return "Please make sure your key is valid.";
         }
     }
 
