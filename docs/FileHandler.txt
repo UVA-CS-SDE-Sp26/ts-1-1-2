@@ -1,6 +1,6 @@
 FileHandler Design
 Roshan Mahesh
-Part B
+Role B
 
 Description:
 This component is responsible for all file I/O operations. It reads files from the data folder
