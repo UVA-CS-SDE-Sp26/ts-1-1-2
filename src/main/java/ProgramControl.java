@@ -1,14 +1,14 @@
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 public class ProgramControl {
 
     private static final List<String> listOfFiles = FileHandler.listFiles();
-    /*
-    GetListOfFiles() is the method for receiving the list of file names. The list of file names
-    will depend on the data type returned. I'm expecting an array of Strings or ArrayLIst etc etc.
-    It seems like this part is NOT in charge of printing anything, and I should only return readable test.
-     */
+
     public String getFileList(){
         String infoToReturn = "";
         if (listOfFiles.isEmpty()) {
@@ -22,21 +22,31 @@ public class ProgramControl {
         return infoToReturn;
     }
 
-    /*
-    GetFileContents() will return the file contents of the file that correlates to a specific
-    number. Expecting command line interface to give proper params. FileNumber must be a string > 0.
-     */
-    public String getFileContents(String fileNumber) throws IOException {
-        String infoToReturn = "";
+    public String getFileContents(String fileNumber, String pathVar) throws IOException {
+        String cipherText = "";
+        Path keyFileLocation;
+        Cipher solve = new Cipher();
         try {
             int n = Integer.parseInt(fileNumber);
+
+            if (n < 1 || n > listOfFiles.size())
+                return "Please enter a number correlating to files.\n";
             //Call on the FileHandler to receive content of the specific file based on the FileNumber
-            infoToReturn = FileHandler.readFile(listOfFiles.get(n-1));
-            return infoToReturn;
+            cipherText = FileHandler.readFile(listOfFiles.get(n-1));
         }
         catch (NumberFormatException a) {
-            return "Please Enter a valid number correlating to files.";
+            return "Please Enter a valid number correlating to files.\n";
+        }
+        try {
+            //In case of null pathvar use default key; in case of given pathvar, use that instead
+            keyFileLocation = Paths.get(Objects.requireNonNullElse(pathVar, "ciphers/key.txt"));
+            return solve.decipher(cipherText, keyFileLocation);
+        }
+        catch (InvalidPathException | NullPointerException ex) {
+            return "Invalid key file path";
         }
     }
+
+
 
 }
