@@ -46,7 +46,7 @@ public class UserInterface {
         }
 
         try {
-            String text = control.getFileContents(fileNumber);
+            String text = control.getFileContents(fileNumber, keyPath);
             System.out.print(text);
             return 0;
         } catch (IllegalArgumentException e) {
