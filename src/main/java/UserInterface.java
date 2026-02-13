@@ -1,6 +1,8 @@
 //Metin Halac
 //Role A
 
+import java.io.IOException;
+
 public class UserInterface {
     private final ProgramControl control;
 
@@ -10,7 +12,6 @@ public class UserInterface {
 
     /**
      * Runs the command line interface and returns an exit code for easy testing.
-     *
      * 0 = success
      * 1 = error
      */
@@ -48,13 +49,20 @@ public class UserInterface {
         try {
             String text = control.getFileContents(fileNumber, keyPath);
             System.out.print(text);
+
+            String trimmed = text.trim();
+
+            if ((trimmed.equals("Please enter a number correlating to files.")
+                    || trimmed.equals("Please Enter a valid number correlating to files.")
+                    || trimmed.equals("Invalid key file path"))) {
+                return 1;
+            }
+
             return 0;
-        } catch (IllegalArgumentException e) {
+        } catch (IOException e) {
             System.out.println("Error: File not found.");
             return 1;
-        } catch (Exception e) {
-            System.out.println("Error: Unable to display file.");
-            return 1;
         }
+
     }
 }
