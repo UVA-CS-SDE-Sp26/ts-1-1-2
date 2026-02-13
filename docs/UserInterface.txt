@@ -1,0 +1,53 @@
+UserInterface Design
+Metin Halac
+Role A
+
+Description:
+
+This class handles all user interaction with the program.
+It receives command line arguments, determines the user’s request,
+calls the ProgramControl class to perform operations,
+and prints the results to the console. Within this process, it will validate user
+input and return an exit code. Exit codes are assigned as 0 for success and 1 for error.
+
+Pseudocode:
+
+Class: UserInterface
+
+Constructor: (control: ProgramControl)
+    store control reference
+
+Method: run(args: String[]) -> int
+
+    IF args length == 0
+        PRINT control.getFileList()
+        RETURN 0
+
+    fileNumber = args[0]
+
+    IF fileNumber is not two digits
+        PRINT "Error: Invalid file query."
+        RETURN 1
+
+    TRY
+        result = control.getFileContents(fileNumber, null)
+        PRINT result
+
+        IF result matches error statements from ProgramControl
+            RETURN 1
+
+        RETURN 0
+
+    CATCH IOException
+        PRINT "Error: Unable to read file."
+        RETURN 1
+
+Tests:
+
+Running program with no arguments should print file list and return 0
+
+Running program with invalid file number should print error and return 1
+
+Running program with valid file number should print file contents and return 0
+
+If ProgramControl throws IOException, run() should return 1
